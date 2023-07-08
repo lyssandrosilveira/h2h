@@ -317,15 +317,13 @@ mean_goals_conceded = filtered_matches["FTAG"].mean()
 # Arredondar os valores para duas casas decimais
 mean_goals_scored = round(mean_goals_scored, 2)
 mean_goals_conceded = round(mean_goals_conceded, 2)
-cv_goals_scored = round(cv_goals_scored, 2)
-cv_goals_conceded = round(cv_goals_conceded, 2)
 
 # Criar uma tabela para exibir as estatísticas
 statistics_table = pd.DataFrame({
-    "Statistics": ["Média de Gols Marcados", "Média de Gols Concedidos"],
+    "Statistics": ["Média de Gols Marcados", "Média de Gols Sofridos"],
     "Value": [mean_goals_scored, mean_goals_conceded]
 })
 
 # Display the statistics table
-st.write("**Média de Gols**")
+st.write("**Estatísticas de Gols**")
 st.table(statistics_table)
