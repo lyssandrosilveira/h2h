@@ -229,13 +229,15 @@ data_final = pd.to_datetime(data_final, format="%d/%m/%Y")
 # Filtrar o dataframe pelo intervalo de data
 filtered_table = merged_table[(merged_table["Date"] >= data_inicial) & (merged_table["Date"] <= data_final)]
 
-# Opções de liga disponíveis
-ligas_disponiveis = ["Todas"] + merged_table["Div"].unique().tolist()
-opcao_liga = st.sidebar.selectbox("Escolha uma liga para análise:", ligas_disponiveis)
+# Opções de filtro para o Home Team e Away Team
+    home_team = st.sidebar.text_input("Filtrar pelo Home Team:")
+    away_team = st.sidebar.text_input("Filtrar pelo Away Team:")
 
-# Filtrar o dataframe pela liga escolhida
-if opcao_liga != "Todas":
-    filtered_table = filtered_table[filtered_table["Div"] == opcao_liga]
+    # Filtrar o dataframe pelo Home Team e Away Team
+    filtered_table = filtered_table[
+        (filtered_table["HomeTeam"].str.contains(home_team, case=False)) &
+        (filtered_table["AwayTeam"].str.contains(away_team, case=False))
+    ]
 
 # Solicitar ao usuário a opção de escolher casa ou visitante
 opcao = st.sidebar.radio("Escolha a opção:", ("Casa", "Visitante"))
@@ -255,12 +257,4 @@ elif opcao == "Visitante":
     # Filtrar o dataframe pelas faixas de odds para a opção visitante
     filtered_table = filtered_table[(filtered_table["PSA"] >= odd_min) & (filtered_table["PSA"] <= odd_max)]
 
-    # Opções de filtro para o Home Team e Away Team
-    home_team = st.sidebar.text_input("Filtrar pelo Home Team:")
-    away_team = st.sidebar.text_input("Filtrar pelo Away Team:")
-
-    # Filtrar o dataframe pelo Home Team e Away Team
-    filtered_table = filtered_table[
-        (filtered_table["HomeTeam"].str.contains(home_team, case=False)) &
-        (filtered_table["AwayTeam"].str.contains(away_team, case=False))
-    ]
+    
