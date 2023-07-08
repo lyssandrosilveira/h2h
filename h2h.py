@@ -1,3 +1,4 @@
+!pip install tabulate
 
 import pandas as pd
 import streamlit as st
