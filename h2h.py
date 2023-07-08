@@ -298,6 +298,12 @@ filtered_matches = filtered_table[
     (filtered_table["AwayTeam"] == away_team)
 ]
 
+# Selecionar as colunas desejadas
+selected_columns = ["Div", "Date", "Time", "HomeTeam", "AwayTeam", "FTHG", "FTAG", "FTR", "PSH", "PSD", "PSA"]
+
+# Filtrar o dataframe pelas colunas selecionadas
+filtered_matches = filtered_matches[selected_columns]
+
 # Display the filtered matches
 st.write("**Filtered Matches**")
 st.table(filtered_matches)
