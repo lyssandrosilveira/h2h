@@ -234,8 +234,8 @@ home_teams = filtered_table["HomeTeam"].unique()
 away_teams = filtered_table["AwayTeam"].unique()
 
 # Opções de filtro para o Home Team e Away Team
-home_team = st.sidebar.selectbox("Filtrar pelo Home Team:", home_teams)
-away_team = st.sidebar.selectbox("Filtrar pelo Away Team:", away_teams)
+home_team = st.sidebar.selectbox("Escolha o time da casa:", home_teams)
+away_team = st.sidebar.selectbox("Escolha o time de fora:", away_teams)
 
 # Filtrar o dataframe pelo Home Team e Away Team
 filtered_table = filtered_table[
@@ -262,24 +262,12 @@ elif opcao == "Visitante":
     filtered_table = filtered_table[(filtered_table["PSA"] >= odd_min) & (filtered_table["PSA"] <= odd_max)]
 
 # Calculate the total number of matches
-total_matches = len(filtered_table)
+total_matches = len(filtered_matches)
 
 # Initialize the win, draw, and loss variables
-wins = 0
-draws = 0
-losses = 0
-
-# Check if there are matches available
-if total_matches > 0:
-    # Calculate the number of wins, draws, and losses based on the selected filter
-    if opcao == "Casa":
-        wins = len(filtered_table[filtered_table["FTR"] == "H"])
-        draws = len(filtered_table[filtered_table["FTR"] == "D"])
-        losses = len(filtered_table[filtered_table["FTR"] == "A"])
-    elif opcao == "Visitante":
-        wins = len(filtered_table[filtered_table["FTR"] == "A"])
-        draws = len(filtered_table[filtered_table["FTR"] == "D"])
-        losses = len(filtered_table[filtered_table["FTR"] == "H"])
+wins = len(filtered_matches[filtered_matches["Res"] == "H"])
+draws = len(filtered_matches[filtered_matches["Res"] == "D"])
+losses = len(filtered_matches[filtered_matches["Res"] == "A"])
 
 # Create a head-to-head table
 head_to_head_table = pd.DataFrame({
@@ -291,16 +279,7 @@ head_to_head_table = pd.DataFrame({
 st.write("**Head-to-Head Statistics**")
 st.table(head_to_head_table)
 
-# Filter the dataframe by Home Team and Away Team
-filtered_matches = filtered_table[
-    (filtered_table["HomeTeam"] == home_team) &
-    (filtered_table["AwayTeam"] == away_team)
-]
-
 # Display the filtered matches
 st.write("**Filtered Matches**")
 st.table(filtered_matches)
 
-# Display the filtered matches
-st.write("**Filtered Matches**")
-st.table(filtered_matches)
