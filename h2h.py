@@ -304,6 +304,43 @@ selected_columns = ["Div", "Date", "Time", "HomeTeam", "AwayTeam", "FTHG", "FTAG
 # Filtrar o dataframe pelas colunas selecionadas
 filtered_matches = filtered_matches[selected_columns]
 
+# Arredondar as colunas relevantes para duas casas decimais
+filtered_matches["FTHG"] = filtered_matches["FTHG"].round(2)
+filtered_matches["FTAG"] = filtered_matches["FTAG"].round(2)
+filtered_matches["PSH"] = filtered_matches["PSH"].round(2)
+filtered_matches["PSD"] = filtered_matches["PSD"].round(2)
+filtered_matches["PSA"] = filtered_matches["PSA"].round(2)
+
 # Display the filtered matches
 st.write("**Filtered Matches**")
 st.table(filtered_matches)
+
+# Filtrar o dataframe pelo Home Team e Away Team
+filtered_matches = filtered_table[
+    (filtered_table["HomeTeam"] == home_team) &
+    (filtered_table["AwayTeam"] == away_team)
+]
+
+# Calcular a média de gols feitos e tomados
+mean_goals_scored = filtered_matches["FTHG"].mean()
+mean_goals_conceded = filtered_matches["FTAG"].mean()
+
+# Calcular o coeficiente de variação
+cv_goals_scored = filtered_matches["FTHG"].std() / mean_goals_scored * 100
+cv_goals_conceded = filtered_matches["FTAG"].std() / mean_goals_conceded * 100
+
+# Arredondar os valores para duas casas decimais
+mean_goals_scored = round(mean_goals_scored, 2)
+mean_goals_conceded = round(mean_goals_conceded, 2)
+cv_goals_scored = round(cv_goals_scored, 2)
+cv_goals_conceded = round(cv_goals_conceded, 2)
+
+# Criar uma tabela para exibir as estatísticas
+statistics_table = pd.DataFrame({
+    "Statistics": ["Mean Goals Scored", "Mean Goals Conceded", "Coef. of Variation Goals Scored", "Coef. of Variation Goals Conceded"],
+    "Value": [mean_goals_scored, mean_goals_conceded, cv_goals_scored, cv_goals_conceded]
+})
+
+# Exibir a tabela de estatísticas
+st.write("**Statistics**")
+st.table(statistics_table)
