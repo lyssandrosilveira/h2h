@@ -1,11 +1,5 @@
-!pip install tabulate
-
 import pandas as pd
 import streamlit as st
-from tabulate import tabulate
-
-
-
 
 urls = [
     "https://www.football-data.co.uk/mmz4281/2223/D1.csv",
@@ -283,10 +277,9 @@ head_to_head_table = pd.DataFrame({
     "Count": [wins, draws, losses]
 })
 
-# Display the head-to-head table using tabulate
-head_to_head_table_formatted = tabulate(head_to_head_table, headers="keys", tablefmt="fancy_grid")
+# Display the head-to-head table
 st.write("**Head-to-Head Statistics**")
-st.code(head_to_head_table_formatted)
+st.table(head_to_head_table)
 
 # Filter the dataframe by Home Team and Away Team
 filtered_matches = filtered_table[
@@ -307,10 +300,9 @@ filtered_matches["PSH"] = filtered_matches["PSH"].round(2)
 filtered_matches["PSD"] = filtered_matches["PSD"].round(2)
 filtered_matches["PSA"] = filtered_matches["PSA"].round(2)
 
-# Display the filtered matches using tabulate
-filtered_matches_formatted = tabulate(filtered_matches, headers="keys", tablefmt="fancy_grid")
+# Display the filtered matches
 st.write("**Filtered Matches**")
-st.code(filtered_matches_formatted)
+st.table(filtered_matches)
 
 # Filtrar o dataframe pelo Home Team e Away Team
 filtered_matches = filtered_table[
@@ -332,15 +324,12 @@ mean_goals_conceded = round(mean_goals_conceded, 2)
 cv_goals_scored = round(cv_goals_scored, 2)
 cv_goals_conceded = round(cv_goals_conceded, 2)
 
-# Criar uma lista de listas com os dados da tabela
-statistics_data = [
-    ["Média de Gols Marcados", mean_goals_scored],
-    ["Média de Gols Sofridos", mean_goals_conceded],
-    ["Coeficiente de Variação de Gols Marcados", cv_goals_scored],
-    ["Coeficiente de Variação de Gols Sofridos", cv_goals_conceded]
-]
+# Criar uma tabela para exibir as estatísticas
+statistics_table = pd.DataFrame({
+    "Statistics": ["Média de Gols Marcados", "Média de Gols Concedidos", "Coeficiente de Variação de Gols Marcados", "Coeficiente de Variação de Gols Concedidos"],
+    "Value": [mean_goals_scored, mean_goals_conceded, cv_goals_scored, cv_goals_conceded]
+})
 
-# Exibir a tabela formatada utilizando o método tabulate
-statistics_table_formatted = tabulate(statistics_data, headers=["Estatística", "Valor"], tablefmt="fancy_grid")
+# Display the statistics table
 st.write("**Statistics**")
-st.code(statistics_table_formatted)
+st.table(statistics_table)
