@@ -288,5 +288,3 @@ filtered_matches = filtered_table[
 # Display the filtered matches
 st.write("**Filtered Matches**")
 st.table(filtered_matches)
-st.table(filtered_matches)
-
