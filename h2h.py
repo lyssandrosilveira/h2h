@@ -336,8 +336,9 @@ mean_goals_conceded = round(mean_goals_conceded, 2)
 # Criar uma tabela para exibir as estatísticas
 statistics_table = pd.DataFrame({
     "Statistics": ["Média de Gols Marcados", "Média de Gols Concedidos"],
-    "Value": [mean_goals_scored, mean_goals_conceded, cv_goals_scored, cv_goals_conceded]
+    "Value": [mean_goals_scored, mean_goals_conceded]
 })
+
 
 # Exibir a tabela de estatísticas
 st.write("**Statistics**")
