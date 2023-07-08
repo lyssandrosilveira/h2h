@@ -226,17 +226,21 @@ merged_table["Date"] = pd.to_datetime(merged_table["Date"], format="%d/%m/%Y")
 data_inicial = pd.to_datetime(data_inicial, format="%d/%m/%Y")
 data_final = pd.to_datetime(data_final, format="%d/%m/%Y")
 
-# Opções de filtro para o Home Team e Away Team
-home_team = st.sidebar.text_input("Filtrar pelo Home Team:")
-away_team = st.sidebar.text_input("Filtrar pelo Away Team:")
-
 # Filtrar o dataframe pelo intervalo de data
 filtered_table = merged_table[(merged_table["Date"] >= data_inicial) & (merged_table["Date"] <= data_final)]
 
+# Obter a lista de valores únicos para HomeTeam e AwayTeam
+home_teams = filtered_table["HomeTeam"].unique()
+away_teams = filtered_table["AwayTeam"].unique()
+
+# Opções de filtro para o Home Team e Away Team
+home_team = st.sidebar.selectbox("Filtrar pelo Home Team:", home_teams)
+away_team = st.sidebar.selectbox("Filtrar pelo Away Team:", away_teams)
+
 # Filtrar o dataframe pelo Home Team e Away Team
 filtered_table = filtered_table[
-    (filtered_table["HomeTeam"].str.contains(home_team, case=False)) &
-    (filtered_table["AwayTeam"].str.contains(away_team, case=False))
+    (filtered_table["HomeTeam"] == home_team) &
+    (filtered_table["AwayTeam"] == away_team)
 ]
 
 # Solicitar ao usuário a opção de escolher casa ou visitante
