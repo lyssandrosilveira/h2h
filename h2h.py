@@ -290,8 +290,13 @@ if total_matches > 0:
 head_to_head_table = pd.DataFrame({
     "": ["Win%", "Draw%", "Loss%"],
     "Percentage": [win_percentage, draw_percentage, loss_percentage]
+})
 
-    # Filter the dataframe by Home Team and Away Team
+# Display the head-to-head table
+st.write("**Head-to-Head Statistics**")
+st.table(head_to_head_table)
+
+# Filter the dataframe by Home Team and Away Team
 filtered_matches = filtered_table[
     (filtered_table["HomeTeam"] == home_team) &
     (filtered_table["AwayTeam"] == away_team)
@@ -300,8 +305,3 @@ filtered_matches = filtered_table[
 # Display the filtered matches
 st.write("**Filtered Matches**")
 st.table(filtered_matches)
-})
-
-# Display the head-to-head table
-st.write("**Head-to-Head Table**")
-st.table(head_to_head_table)
