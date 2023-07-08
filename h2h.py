@@ -293,12 +293,27 @@ selected_columns = ["Div", "Date", "Time", "HomeTeam", "AwayTeam", "FTHG", "FTAG
 # Filtrar o dataframe pelas colunas selecionadas
 filtered_matches = filtered_matches[selected_columns]
 
+# Renomear as colunas
+filtered_matches = filtered_matches.rename(columns={
+    "Div": "Divisão",
+    "Date": "Data",
+    "Time": "Hora",
+    "HomeTeam": "Time da Casa",
+    "AwayTeam": "Time de Fora",
+    "FTHG": "Gols Casa",
+    "FTAG": "Gols Fora",
+    "FTR": "Resultado",
+    "PSH": "Odd Casa",
+    "PSD": "Odd Empate",
+    "PSA": "Odd Fora"
+})
+
 # Arredondar as colunas relevantes para duas casas decimais
-filtered_matches["FTHG"] = filtered_matches["FTHG"].round(2)
-filtered_matches["FTAG"] = filtered_matches["FTAG"].round(2)
-filtered_matches["PSH"] = filtered_matches["PSH"].round(2)
-filtered_matches["PSD"] = filtered_matches["PSD"].round(2)
-filtered_matches["PSA"] = filtered_matches["PSA"].round(2)
+filtered_matches["Gols Casa"] = filtered_matches["Gols Casa"].round(2)
+filtered_matches["Gols Fora"] = filtered_matches["Gols Fora"].round(2)
+filtered_matches["Odd Casa"] = filtered_matches["Odd Casa"].round(2)
+filtered_matches["Odd Empate"] = filtered_matches["Odd Empate"].round(2)
+filtered_matches["Odd Fora"] = filtered_matches["Odd Fora"].round(2)
 
 # Display the filtered matches
 st.write("**Jogos do Filtro**")
