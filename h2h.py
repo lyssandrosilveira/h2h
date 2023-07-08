@@ -214,7 +214,7 @@ merged_table["Div"] = merged_table["Div"].replace({
 })
 
 # Configurações do Streamlit
-st.title("Backtesting Match Odds")
+st.title("Análise h2h")
 st.sidebar.title("Filtros")
 
 # Solicitar ao usuário as datas inicial e final
@@ -226,18 +226,18 @@ merged_table["Date"] = pd.to_datetime(merged_table["Date"], format="%d/%m/%Y")
 data_inicial = pd.to_datetime(data_inicial, format="%d/%m/%Y")
 data_final = pd.to_datetime(data_final, format="%d/%m/%Y")
 
+# Opções de filtro para o Home Team e Away Team
+home_team = st.sidebar.text_input("Filtrar pelo Home Team:")
+away_team = st.sidebar.text_input("Filtrar pelo Away Team:")
+
 # Filtrar o dataframe pelo intervalo de data
 filtered_table = merged_table[(merged_table["Date"] >= data_inicial) & (merged_table["Date"] <= data_final)]
 
-# Opções de filtro para o Home Team e Away Team
-    home_team = st.sidebar.text_input("Filtrar pelo Home Team:")
-    away_team = st.sidebar.text_input("Filtrar pelo Away Team:")
-
-    # Filtrar o dataframe pelo Home Team e Away Team
-    filtered_table = filtered_table[
-        (filtered_table["HomeTeam"].str.contains(home_team, case=False)) &
-        (filtered_table["AwayTeam"].str.contains(away_team, case=False))
-    ]
+# Filtrar o dataframe pelo Home Team e Away Team
+filtered_table = filtered_table[
+    (filtered_table["HomeTeam"].str.contains(home_team, case=False)) &
+    (filtered_table["AwayTeam"].str.contains(away_team, case=False))
+]
 
 # Solicitar ao usuário a opção de escolher casa ou visitante
 opcao = st.sidebar.radio("Escolha a opção:", ("Casa", "Visitante"))
@@ -256,5 +256,3 @@ elif opcao == "Visitante":
 
     # Filtrar o dataframe pelas faixas de odds para a opção visitante
     filtered_table = filtered_table[(filtered_table["PSA"] >= odd_min) & (filtered_table["PSA"] <= odd_max)]
-
-    
