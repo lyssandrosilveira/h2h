@@ -262,12 +262,12 @@ elif opcao == "Visitante":
     filtered_table = filtered_table[(filtered_table["PSA"] >= odd_min) & (filtered_table["PSA"] <= odd_max)]
 
 # Calculate the total number of matches
-total_matches = len(filtered_matches)
+total_matches = len(filtered_table)
 
 # Initialize the win, draw, and loss variables
-wins = len(filtered_matches[filtered_matches["Res"] == "H"])
-draws = len(filtered_matches[filtered_matches["Res"] == "D"])
-losses = len(filtered_matches[filtered_matches["Res"] == "A"])
+wins = len(filtered_table[filtered_table["Res"] == "H"])
+draws = len(filtered_table[filtered_table["Res"] == "D"])
+losses = len(filtered_table[filtered_table["Res"] == "A"])
 
 # Create a head-to-head table
 head_to_head_table = pd.DataFrame({
@@ -279,7 +279,14 @@ head_to_head_table = pd.DataFrame({
 st.write("**Head-to-Head Statistics**")
 st.table(head_to_head_table)
 
+# Filter the dataframe by Home Team and Away Team
+filtered_matches = filtered_table[
+    (filtered_table["HomeTeam"] == home_team) &
+    (filtered_table["AwayTeam"] == away_team)
+]
+
 # Display the filtered matches
 st.write("**Filtered Matches**")
+st.table(filtered_matches)
 st.table(filtered_matches)
 
