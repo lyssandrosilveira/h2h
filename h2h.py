@@ -230,8 +230,8 @@ data_final = pd.to_datetime(data_final, format="%d/%m/%Y")
 filtered_table = merged_table[(merged_table["Date"] >= data_inicial) & (merged_table["Date"] <= data_final)]
 
 # Obter a lista de valores únicos para HomeTeam e AwayTeam
-home_teams = filtered_table["HomeTeam"].unique()
-away_teams = filtered_table["AwayTeam"].unique()
+home_teams = filtered_table["Home"].unique()
+away_teams = filtered_table["Away"].unique()
 
 # Opções de filtro para o Home Team e Away Team
 home_team = st.sidebar.selectbox("Escolha o time da casa:", home_teams)
@@ -239,8 +239,8 @@ away_team = st.sidebar.selectbox("Escolha o time de fora:", away_teams)
 
 # Filtrar o dataframe pelo Home Team e Away Team
 filtered_table = filtered_table[
-    (filtered_table["HomeTeam"] == home_team) &
-    (filtered_table["AwayTeam"] == away_team)
+    (filtered_table["Home"] == home_team) &
+    (filtered_table["Away"] == away_team)
 ]
 
 # Solicitar ao usuário a opção de escolher casa ou visitante
@@ -252,14 +252,14 @@ if opcao == "Casa":
     odd_max = st.sidebar.number_input("Odd Final:")
 
     # Filtrar o dataframe pelas faixas de odds para a opção casa
-    filtered_table = filtered_table[(filtered_table["PSH"] >= odd_min) & (filtered_table["PSH"] <= odd_max)]
+    filtered_table = filtered_table[(filtered_table["PH"] >= odd_min) & (filtered_table["PH"] <= odd_max)]
 elif opcao == "Visitante":
     # Solicitar ao usuário os valores mínimos e máximos das odds para a opção visitante
     odd_min = st.sidebar.number_input("Odd Inicial:")
     odd_max = st.sidebar.number_input("Odd Final:")
 
     # Filtrar o dataframe pelas faixas de odds para a opção visitante
-    filtered_table = filtered_table[(filtered_table["PSA"] >= odd_min) & (filtered_table["PSA"] <= odd_max)]
+    filtered_table = filtered_table[(filtered_table["PA"] >= odd_min) & (filtered_table["PA"] <= odd_max)]
 
 # Calculate the total number of matches
 total_matches = len(filtered_table)
@@ -281,8 +281,8 @@ st.table(head_to_head_table)
 
 # Filter the dataframe by Home Team and Away Team
 filtered_matches = filtered_table[
-    (filtered_table["HomeTeam"] == home_team) &
-    (filtered_table["AwayTeam"] == away_team)
+    (filtered_table["Home"] == home_team) &
+    (filtered_table["Away"] == away_team)
 ]
 
 # Display the filtered matches
