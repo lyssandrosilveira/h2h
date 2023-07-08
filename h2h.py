@@ -229,9 +229,22 @@ data_final = pd.to_datetime(data_final, format="%d/%m/%Y")
 # Filtrar o dataframe pelo intervalo de data
 filtered_table = merged_table[(merged_table["Date"] >= data_inicial) & (merged_table["Date"] <= data_final)]
 
+# Renomear as colunas de acordo com os nomes corretos
+filtered_table = filtered_table.rename(columns={
+    "Home": "HomeTeam",
+    "Away": "AwayTeam",
+    "HG": "FTHG",
+    "AG": "FTAG",
+    "Res": "FTR",
+    "PH": "PSH",
+    "PD": "PSD",
+    "PA": "PSA",
+    "Country": "Div"
+})
+
 # Obter a lista de valores únicos para HomeTeam e AwayTeam
-home_teams = filtered_table["Home"].unique()
-away_teams = filtered_table["Away"].unique()
+home_teams = filtered_table["HomeTeam"].unique()
+away_teams = filtered_table["AwayTeam"].unique()
 
 # Opções de filtro para o Home Team e Away Team
 home_team = st.sidebar.selectbox("Escolha o time da casa:", home_teams)
@@ -239,8 +252,8 @@ away_team = st.sidebar.selectbox("Escolha o time de fora:", away_teams)
 
 # Filtrar o dataframe pelo Home Team e Away Team
 filtered_table = filtered_table[
-    (filtered_table["Home"] == home_team) &
-    (filtered_table["Away"] == away_team)
+    (filtered_table["HomeTeam"] == home_team) &
+    (filtered_table["AwayTeam"] == away_team)
 ]
 
 # Solicitar ao usuário a opção de escolher casa ou visitante
@@ -252,22 +265,22 @@ if opcao == "Casa":
     odd_max = st.sidebar.number_input("Odd Final:")
 
     # Filtrar o dataframe pelas faixas de odds para a opção casa
-    filtered_table = filtered_table[(filtered_table["PH"] >= odd_min) & (filtered_table["PH"] <= odd_max)]
+    filtered_table = filtered_table[(filtered_table["PSH"] >= odd_min) & (filtered_table["PSH"] <= odd_max)]
 elif opcao == "Visitante":
     # Solicitar ao usuário os valores mínimos e máximos das odds para a opção visitante
     odd_min = st.sidebar.number_input("Odd Inicial:")
     odd_max = st.sidebar.number_input("Odd Final:")
 
     # Filtrar o dataframe pelas faixas de odds para a opção visitante
-    filtered_table = filtered_table[(filtered_table["PA"] >= odd_min) & (filtered_table["PA"] <= odd_max)]
+    filtered_table = filtered_table[(filtered_table["PSA"] >= odd_min) & (filtered_table["PSA"] <= odd_max)]
 
 # Calculate the total number of matches
 total_matches = len(filtered_table)
 
 # Initialize the win, draw, and loss variables
-wins = len(filtered_table[filtered_table["Res"] == "H"])
-draws = len(filtered_table[filtered_table["Res"] == "D"])
-losses = len(filtered_table[filtered_table["Res"] == "A"])
+wins = len(filtered_table[filtered_table["FTR"] == "H"])
+draws = len(filtered_table[filtered_table["FTR"] == "D"])
+losses = len(filtered_table[filtered_table["FTR"] == "A"])
 
 # Create a head-to-head table
 head_to_head_table = pd.DataFrame({
@@ -281,8 +294,8 @@ st.table(head_to_head_table)
 
 # Filter the dataframe by Home Team and Away Team
 filtered_matches = filtered_table[
-    (filtered_table["Home"] == home_team) &
-    (filtered_table["Away"] == away_team)
+    (filtered_table["HomeTeam"] == home_team) &
+    (filtered_table["AwayTeam"] == away_team)
 ]
 
 # Display the filtered matches
