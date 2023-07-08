@@ -261,6 +261,6 @@ elif opcao == "Visitante":
 
     # Filtrar o dataframe pelo Home Team e Away Team
     filtered_table = filtered_table[
-    (filtered_table["HomeTeam"].str.contains(home_team, case=False)) &
-    (filtered_table["AwayTeam"].str.contains(away_team, case=False))
-]
+        (filtered_table["HomeTeam"].str.contains(home_team, case=False)) &
+        (filtered_table["AwayTeam"].str.contains(away_team, case=False))
+    ]
