@@ -264,20 +264,27 @@ elif opcao == "Visitante":
 # Calculate the total number of matches
 total_matches = len(filtered_table)
 
-# Calculate the number of wins, draws, and losses based on the selected filter
-if opcao == "Casa":
-    wins = len(filtered_table[filtered_table["FTR"] == "H"])
-    draws = len(filtered_table[filtered_table["FTR"] == "D"])
-    losses = len(filtered_table[filtered_table["FTR"] == "A"])
-elif opcao == "Visitante":
-    wins = len(filtered_table[filtered_table["FTR"] == "A"])
-    draws = len(filtered_table[filtered_table["FTR"] == "D"])
-    losses = len(filtered_table[filtered_table["FTR"] == "H"])
+# Initialize the win%, draw%, and loss% variables
+win_percentage = 0.0
+draw_percentage = 0.0
+loss_percentage = 0.0
 
-# Calculate the win%, draw%, and loss% with two decimal places
-win_percentage = round((wins / total_matches) * 100, 2)
-draw_percentage = round((draws / total_matches) * 100, 2)
-loss_percentage = round((losses / total_matches) * 100, 2)
+# Check if there are matches available
+if total_matches > 0:
+    # Calculate the number of wins, draws, and losses based on the selected filter
+    if opcao == "Casa":
+        wins = len(filtered_table[filtered_table["FTR"] == "H"])
+        draws = len(filtered_table[filtered_table["FTR"] == "D"])
+        losses = len(filtered_table[filtered_table["FTR"] == "A"])
+    elif opcao == "Visitante":
+        wins = len(filtered_table[filtered_table["FTR"] == "A"])
+        draws = len(filtered_table[filtered_table["FTR"] == "D"])
+        losses = len(filtered_table[filtered_table["FTR"] == "H"])
+
+    # Calculate the win%, draw%, and loss% with two decimal places
+    win_percentage = round((wins / total_matches) * 100, 2)
+    draw_percentage = round((draws / total_matches) * 100, 2)
+    loss_percentage = round((losses / total_matches) * 100, 2)
 
 # Create a head-to-head table
 head_to_head_table = pd.DataFrame({
