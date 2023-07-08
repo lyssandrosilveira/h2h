@@ -264,10 +264,10 @@ elif opcao == "Visitante":
 # Calculate the total number of matches
 total_matches = len(filtered_table)
 
-# Initialize the win%, draw%, and loss% variables
-win_percentage = 0.0
-draw_percentage = 0.0
-loss_percentage = 0.0
+# Initialize the win, draw, and loss variables
+wins = 0
+draws = 0
+losses = 0
 
 # Check if there are matches available
 if total_matches > 0:
@@ -281,15 +281,10 @@ if total_matches > 0:
         draws = len(filtered_table[filtered_table["FTR"] == "D"])
         losses = len(filtered_table[filtered_table["FTR"] == "H"])
 
-    # Calculate the win%, draw%, and loss% with two decimal places
-    win_percentage = round((wins / total_matches) * 100, 2)
-    draw_percentage = round((draws / total_matches) * 100, 2)
-    loss_percentage = round((losses / total_matches) * 100, 2)
-
 # Create a head-to-head table
 head_to_head_table = pd.DataFrame({
-    "": ["Win%", "Draw%", "Loss%"],
-    "Percentage": [win_percentage, draw_percentage, loss_percentage]
+    "": ["Win", "Draw", "Loss"],
+    "Count": [wins, draws, losses]
 })
 
 # Display the head-to-head table
@@ -301,6 +296,10 @@ filtered_matches = filtered_table[
     (filtered_table["HomeTeam"] == home_team) &
     (filtered_table["AwayTeam"] == away_team)
 ]
+
+# Display the filtered matches
+st.write("**Filtered Matches**")
+st.table(filtered_matches)
 
 # Display the filtered matches
 st.write("**Filtered Matches**")
