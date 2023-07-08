@@ -278,7 +278,7 @@ head_to_head_table = pd.DataFrame({
 })
 
 # Display the head-to-head table
-st.write("**Head-to-Head Statistics**")
+st.write("**Head-to-Head**")
 st.table(head_to_head_table)
 
 # Filter the dataframe by Home Team and Away Team
@@ -301,7 +301,7 @@ filtered_matches["PSD"] = filtered_matches["PSD"].round(2)
 filtered_matches["PSA"] = filtered_matches["PSA"].round(2)
 
 # Display the filtered matches
-st.write("**Filtered Matches**")
+st.write("**Jogos do Filtro**")
 st.table(filtered_matches)
 
 # Filtrar o dataframe pelo Home Team e Away Team
@@ -314,10 +314,6 @@ filtered_matches = filtered_table[
 mean_goals_scored = filtered_matches["FTHG"].mean()
 mean_goals_conceded = filtered_matches["FTAG"].mean()
 
-# Calcular o coeficiente de variação
-cv_goals_scored = filtered_matches["FTHG"].std() / mean_goals_scored * 100
-cv_goals_conceded = filtered_matches["FTAG"].std() / mean_goals_conceded * 100
-
 # Arredondar os valores para duas casas decimais
 mean_goals_scored = round(mean_goals_scored, 2)
 mean_goals_conceded = round(mean_goals_conceded, 2)
@@ -326,10 +322,10 @@ cv_goals_conceded = round(cv_goals_conceded, 2)
 
 # Criar uma tabela para exibir as estatísticas
 statistics_table = pd.DataFrame({
-    "Statistics": ["Média de Gols Marcados", "Média de Gols Concedidos", "Coeficiente de Variação de Gols Marcados", "Coeficiente de Variação de Gols Concedidos"],
-    "Value": [mean_goals_scored, mean_goals_conceded, cv_goals_scored, cv_goals_conceded]
+    "Statistics": ["Média de Gols Marcados", "Média de Gols Concedidos"],
+    "Value": [mean_goals_scored, mean_goals_conceded]
 })
 
 # Display the statistics table
-st.write("**Statistics**")
+st.write("**Média de Gols**")
 st.table(statistics_table)
